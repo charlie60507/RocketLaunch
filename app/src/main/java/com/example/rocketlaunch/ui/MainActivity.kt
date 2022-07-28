@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.rocketlaunch.OkHttpSingleton
-import com.example.rocketlaunch.R
+import com.example.rocketlaunch.databinding.ActivityMainBinding
 import com.example.rocketlaunch.viewmodel.RocketViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -15,8 +12,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
     }
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var recyclerContainer: SwipeRefreshLayout
+    private lateinit var binding: ActivityMainBinding
 
     private val rocketViewModel = RocketViewModel()
     var rocketAdapter = RocketAdapter()
@@ -24,20 +20,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate")
-        setContentView(R.layout.activity_main)
-
-        // init views
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerContainer = findViewById(R.id.recycler_view_container)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // setup recyclerview
-        recyclerView.apply {
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = rocketAdapter
         }
 
         // pull down to refresh
-        recyclerContainer.setOnRefreshListener {
+        binding.recyclerViewContainer.setOnRefreshListener {
             refreshData()
         }
     }
@@ -49,10 +42,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshData() {
-        recyclerContainer.isRefreshing = true
+        binding.recyclerViewContainer.isRefreshing = true
         rocketViewModel.getRocketInfo().observe(this, {
             Log.d(TAG, "update rocketAdapter.info")
-            recyclerContainer.isRefreshing = false
+            binding.recyclerViewContainer.isRefreshing = false
             rocketAdapter.info = it
             rocketAdapter.notifyDataSetChanged()
         })
