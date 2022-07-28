@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rocketlaunch.databinding.ActivityMainBinding
+import com.example.rocketlaunch.persistence.DataRepository
 import com.example.rocketlaunch.viewmodel.RocketViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -14,10 +15,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val rocketViewModel = RocketViewModel()
+    private val rocketViewModel = RocketViewModel(DataRepository)
     var rocketAdapter = RocketAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)

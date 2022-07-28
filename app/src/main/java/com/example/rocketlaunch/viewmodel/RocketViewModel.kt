@@ -1,25 +1,17 @@
 package com.example.rocketlaunch.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.rocketlaunch.data.RocketInfo
-import com.example.rocketlaunch.datamodel.RocketDataModel
+import androidx.lifecycle.liveData
+import com.example.rocketlaunch.persistence.DataRepository
 
-class RocketViewModel : ViewModel() {
+class RocketViewModel(private val repository: DataRepository) : ViewModel() {
     companion object {
         private const val TAG = "RocketViewModel"
     }
 
-    private val rocketDataModel = RocketDataModel()
-    private var info = MutableLiveData<RocketInfo>()
-
-    fun getRocketInfo():MutableLiveData<RocketInfo> {
+    fun getRocketInfo() = liveData {
         Log.d(TAG, "getRocketInfo")
-        rocketDataModel.callRocketInfoApi { result ->
-            Log.d(TAG, "getRocketInfo, post result=${result}")
-            info.postValue(result)
-        }
-        return info
+        emit(repository.getRocketInfo())
     }
 }
