@@ -1,5 +1,6 @@
 package com.example.rocketlaunch.ui
 
+import RocketInfoItem
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.rocketlaunch.data.RocketInfo
-import com.example.rocketlaunch.data.RocketInfoItem
 import com.example.rocketlaunch.databinding.RocketItemBinding
 
 class RocketAdapter :
@@ -21,7 +21,7 @@ class RocketAdapter :
     class RocketViewHolder(private val binding: RocketItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(rocketInfoItem: RocketInfoItem) {
-            val flightNumText = "Flight ${rocketInfoItem.flight_number}"
+            val flightNumText = "Flight ${rocketInfoItem.flightNumber}"
             val loadingIcon = CircularProgressDrawable(binding.root.context).apply {
                 strokeWidth = 5f
                 centerRadius = 30f
@@ -29,9 +29,9 @@ class RocketAdapter :
             loadingIcon.start()
 
             binding.flightNumber.text = flightNumText
-            binding.missionName.text = rocketInfoItem.mission_name
-            binding.launchDateUtc.text = rocketInfoItem.launch_date_utc
-            (rocketInfoItem.links.mission_patch_small as? String)?.let {
+            binding.missionName.text = rocketInfoItem.missionName
+            binding.launchDateUtc.text = rocketInfoItem.launchDateUtc
+            (rocketInfoItem.links.missionPatchSmall as? String)?.let {
                 Glide
                     .with(binding.root.context)
                     .load(it)
