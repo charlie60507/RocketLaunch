@@ -4,9 +4,13 @@ import RocketInfoItem
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.example.rocketlaunch.R
 import com.example.rocketlaunch.data.RocketInfo
 import com.example.rocketlaunch.databinding.RocketItemBinding
 
@@ -15,6 +19,7 @@ class RocketAdapter :
     companion object {
         private const val TAG = "RocketAdapter"
     }
+
     var info: RocketInfo = RocketInfo()
 
     // ViewHolder
@@ -31,12 +36,16 @@ class RocketAdapter :
             binding.flightNumber.text = flightNumText
             binding.missionName.text = rocketInfoItem.missionName
             binding.launchDateUtc.text = rocketInfoItem.launchDateUtc
-            (rocketInfoItem.links.missionPatchSmall as? String)?.let {
-                Glide
-                    .with(binding.root.context)
-                    .load(it)
-                    .placeholder(loadingIcon)
-                    .into(binding.icon)
+            Glide
+                .with(binding.root.context)
+                .load(rocketInfoItem.links.missionPatchSmall)
+                .placeholder(loadingIcon)
+                .into(binding.icon)
+            binding.root.setOnClickListener {
+                (binding.root.context as? AppCompatActivity)?.supportFragmentManager?.commit {
+                    addToBackStack("detail")
+                    replace(R.id.fragment_container, RocketDetailFragment.newInstance(binding.icon.drawable.toBitmap()), "detail")
+                }
             }
         }
     }
