@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 
 object DataRepository {
     private const val TAG = "DataRepository"
-    private val api = RocketInfoNetwork.PROVIDE_ROCKET_INFO_SERVICE
+    private val api = RocketInfoNetwork.apiService
     suspend fun getRocketInfo() = api.getRocketLaunch()
     suspend fun reorder(info: RocketInfo?, order: FlightOrder) = withContext(Dispatchers.IO) {
         Log.d(TAG, "reorder")

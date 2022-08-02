@@ -12,7 +12,7 @@ interface RocketInfoService {
 }
 
 object RocketInfoNetwork {
-    val PROVIDE_ROCKET_INFO_SERVICE: RocketInfoService =
+    val apiService: RocketInfoService =
         Retrofit.Builder()
             .baseUrl(ApiConstant.ROCKET_URL)
             .addConverterFactory(GsonConverterFactory.create())
