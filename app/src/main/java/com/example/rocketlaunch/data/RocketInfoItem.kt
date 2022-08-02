@@ -1,8 +1,11 @@
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class RocketInfoItem(
     @SerializedName("crew")
-    val crew: List<Any>,
+    val crew: List<String?>,
     @SerializedName("details")
     val details: String,
     @SerializedName("flight_number")
@@ -63,8 +66,9 @@ data class RocketInfoItem(
     val timeline: Timeline,
     @SerializedName("upcoming")
     val upcoming: Boolean
-)
+) : Parcelable
 
+@Parcelize
 data class LaunchFailureDetails(
     @SerializedName("altitude")
     val altitude: Int,
@@ -72,8 +76,9 @@ data class LaunchFailureDetails(
     val reason: String,
     @SerializedName("time")
     val time: Int
-)
+) : Parcelable
 
+@Parcelize
 data class LaunchSite(
     @SerializedName("site_id")
     val siteId: String,
@@ -81,8 +86,9 @@ data class LaunchSite(
     val siteName: String,
     @SerializedName("site_name_long")
     val siteNameLong: String
-)
+) : Parcelable
 
+@Parcelize
 data class Links(
     @SerializedName("article_link")
     val articleLink: String,
@@ -108,8 +114,9 @@ data class Links(
     val wikipedia: String,
     @SerializedName("youtube_id")
     val youtubeId: String
-)
+) : Parcelable
 
+@Parcelize
 data class Rocket(
     @SerializedName("fairings")
     val fairings: Fairings,
@@ -123,13 +130,15 @@ data class Rocket(
     val rocketType: String,
     @SerializedName("second_stage")
     val secondStage: SecondStage
-)
+) : Parcelable
 
+@Parcelize
 data class Telemetry(
     @SerializedName("flight_club")
     val flightClub: String
-)
+) : Parcelable
 
+@Parcelize
 data class Timeline(
     @SerializedName("beco")
     val beco: Int,
@@ -217,8 +226,9 @@ data class Timeline(
     val webcastLaunch: Int,
     @SerializedName("webcast_liftoff")
     val webcastLiftoff: Int
-)
+) : Parcelable
 
+@Parcelize
 data class Fairings(
     @SerializedName("recovered")
     val recovered: Boolean,
@@ -228,20 +238,23 @@ data class Fairings(
     val reused: Boolean,
     @SerializedName("ship")
     val ship: String
-)
+) : Parcelable
 
+@Parcelize
 data class FirstStage(
     @SerializedName("cores")
     val cores: List<Core>
-)
+) : Parcelable
 
+@Parcelize
 data class SecondStage(
     @SerializedName("block")
     val block: Int,
     @SerializedName("payloads")
     val payloads: List<Payload>
-)
+) : Parcelable
 
+@Parcelize
 data class Core(
     @SerializedName("block")
     val block: Int,
@@ -263,8 +276,9 @@ data class Core(
     val legs: Boolean,
     @SerializedName("reused")
     val reused: Boolean
-)
+) : Parcelable
 
+@Parcelize
 data class Payload(
     @SerializedName("cap_serial")
     val capSerial: String,
@@ -300,8 +314,9 @@ data class Payload(
     val reused: Boolean,
     @SerializedName("uid")
     val uid: String
-)
+) : Parcelable
 
+@Parcelize
 data class OrbitParams(
     @SerializedName("apoapsis_km")
     val apoapsisKm: Double,
@@ -333,4 +348,4 @@ data class OrbitParams(
     val regime: String,
     @SerializedName("semi_major_axis_km")
     val semiMajorAxisKm: Double
-)
+) : Parcelable

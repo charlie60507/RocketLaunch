@@ -13,6 +13,7 @@ class OkHttpSingleton {
             return instance ?: synchronized(this) {
                 instance ?: OkHttpClient().newBuilder()
                     .connectTimeout(ApiConstant.OKHTTP_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(ApiConstant.OKHTTP_TIMEOUT, TimeUnit.SECONDS)
                     .build().also { instance = it }
             }
         }

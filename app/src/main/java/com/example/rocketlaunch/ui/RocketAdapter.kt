@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.Glide
+import com.example.rocketlaunch.GlideUtils
 import com.example.rocketlaunch.R
 import com.example.rocketlaunch.data.RocketInfo
 import com.example.rocketlaunch.databinding.RocketItemBinding
@@ -27,24 +26,29 @@ class RocketAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(rocketInfoItem: RocketInfoItem) {
             val flightNumText = "Flight ${rocketInfoItem.flightNumber}"
-            val loadingIcon = CircularProgressDrawable(binding.root.context).apply {
-                strokeWidth = 5f
-                centerRadius = 30f
-            }
-            loadingIcon.start()
-
             binding.flightNumber.text = flightNumText
             binding.missionName.text = rocketInfoItem.missionName
             binding.launchDateUtc.text = rocketInfoItem.launchDateUtc
-            Glide
-                .with(binding.root.context)
-                .load(rocketInfoItem.links.missionPatchSmall)
-                .placeholder(loadingIcon)
-                .into(binding.icon)
+            GlideUtils.loadRocketIcon(
+                binding.root.context,
+                rocketInfoItem.links.missionPatchSmall,
+                binding.icon
+            )
             binding.root.setOnClickListener {
+                val bitmap =
+                    if (binding.icon.drawable != null && binding.icon.drawable.intrinsicHeight > 0) { // get icon if it is loaded
+                        binding.icon.drawable.toBitmap()
+                    } else {
+                        null
+                }
+                Log.d(TAG, "rocketInfoItem=$rocketInfoItem, url=${rocketInfoItem.links.missionPatchSmall}")
                 (binding.root.context as? AppCompatActivity)?.supportFragmentManager?.commit {
                     addToBackStack("detail")
-                    replace(R.id.fragment_container, RocketDetailFragment.newInstance(binding.icon.drawable.toBitmap()), "detail")
+                    replace(
+                        R.id.fragment_container,
+                        RocketDetailFragment.newInstance(bitmap, rocketInfoItem),
+                        "detail"
+                    )
                 }
             }
         }
