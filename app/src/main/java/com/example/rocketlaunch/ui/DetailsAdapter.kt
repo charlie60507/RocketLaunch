@@ -1,4 +1,4 @@
-package DetailsAdapter
+package com.example.rocketlaunch.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +28,8 @@ class DetailsAdapter(
 
     override fun hasStableIds(): Boolean = true
 
+    override fun isChildSelectable(p0: Int, p1: Int): Boolean = false
+
     override fun getGroupView(
         groupPosition: Int, isExpanded: Boolean, convertView: View?,
         parent: ViewGroup
@@ -39,11 +41,13 @@ class DetailsAdapter(
                 ListGroupBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             view = binding.root
             groupHolder = GroupHolder(binding)
-            groupHolder.bind(groups[groupPosition])
             view.tag = groupHolder
         } else {
             view = convertView
+            groupHolder = view.tag as GroupHolder
         }
+        groupHolder.bind(groups[groupPosition])
+
         return view
     }
 
@@ -53,21 +57,21 @@ class DetailsAdapter(
     ): View {
         val view: View
         val itemHolder: ItemHolder?
+        val child = getChild(groupPosition, childPosition)
+
         if (convertView == null) {
             val binding =
                 ItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             view = binding.root
             itemHolder = ItemHolder(binding)
-            val child = getChild(groupPosition, childPosition)
-            itemHolder.bind(child.first, child.second)
             view.tag = itemHolder
         } else {
             view = convertView
+            itemHolder = view.tag as ItemHolder
         }
+        itemHolder.bind(child.first, child.second)
         return view
     }
-
-    override fun isChildSelectable(p0: Int, p1: Int): Boolean = false
 
     internal class GroupHolder(private val binding: ListGroupBinding) {
         fun bind(title: String) {
@@ -81,6 +85,4 @@ class DetailsAdapter(
             binding.value.text = value
         }
     }
-
-
 }

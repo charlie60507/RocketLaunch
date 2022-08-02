@@ -1,4 +1,4 @@
-package com.example.rocketlaunch.apis
+package com.example.rocketlaunch.network
 
 object ApiConstant {
     const val ROCKET_URL = "https://api.spacexdata.com/"

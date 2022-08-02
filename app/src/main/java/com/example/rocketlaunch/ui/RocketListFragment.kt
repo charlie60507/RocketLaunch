@@ -25,6 +25,14 @@ class RocketListFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onStart() {
+        Log.i(TAG, "onCreate")
+        super.onStart()
+
+        // Refresh data
+        refreshData()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,9 +85,6 @@ class RocketListFragment : Fragment() {
     override fun onResume() {
         Log.i(TAG, "onResume")
         super.onResume()
-
-        // Refresh data
-        refreshData()
     }
 
     override fun onDestroyView() {

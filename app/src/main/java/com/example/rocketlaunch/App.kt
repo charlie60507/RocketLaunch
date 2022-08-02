@@ -5,6 +5,7 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
+import com.example.rocketlaunch.network.OkHttpSingleton
 import java.io.InputStream
 
 class App : Application() {
@@ -17,7 +18,7 @@ class App : Application() {
         Log.d(TAG, "App onCreate")
         Glide.get(this).registry.replace(
             GlideUrl::class.java,
-            InputStream::class.java, OkHttpUrlLoader.Factory(OkHttpSingleton.getInstance())
+            InputStream::class.java, OkHttpUrlLoader.Factory(OkHttpSingleton.instance)
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.rocketlaunch
+package com.example.rocketlaunch.utils
 
 import android.content.Context
 import android.util.Log
